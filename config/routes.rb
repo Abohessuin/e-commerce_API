@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   scope '/api' do
-    resource :product do
-      collection do
-        get :search
-      end
+    resources :products do
+      post :search, on: :collection
     end  
   end  
 end

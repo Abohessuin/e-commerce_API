@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+    skip_before_action :verify_authenticity_token
+
     def index
         products = Product.all
 
@@ -8,14 +10,21 @@ class ProductsController < ApplicationController
     def search 
         begin
             products = Product.all
-            products.where("size = ?", params[:size]) if params[:size] 
-            products.where("color = ?", params[:color]) if params[:color] 
-            products.where("room = ?", params[:room]) if params[:room] 
-            products.where("material = ?", params[:material]) if params[:material] 
-            products.where("construction = ?", params[:construction]) if params[:construction] 
-            products.where("style = ?", params[:style]) if params[:style] 
-            products.where("price >= ?", params[:price][:min_price]) if params[:price] && params[:price][:min_price] 
-            products.where("price <= ?", params[:price][:max_price]) if params[:price] && params[:price][:max_price]
+            min_price = nil
+            max_price = nil
+            if params[:price] 
+                price_range = params[:price].split('to')
+                min_price = price_range[0].to_i
+                min_price = price_range[1].to_i   
+            end    
+            products = products.where(:size => params[:sizes]) if params[:sizes] 
+            products = products.where(:color => params[:color]) if params[:color] 
+            products = products.where(:room => params[:room]) if params[:room] 
+            products = products.where(:material => params[:material]) if params[:material] 
+            products = products.where(:construction => params[:construction]) if params[:construction] 
+            products = products.where(:style => params[:style]) if params[:style] 
+            products = products.where("price >= ?", min_price) if min_price 
+            products = products.where("price <= ?", max_price) if max_price
 
             if products
                 render json: products, status: :ok and return

@@ -5,21 +5,18 @@
 #   gem "sqlite3"
 #
 default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
-
-development:
-  <<: *default
-  database: db/development.sqlite3
-
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-test:
-  <<: *default
-  database: db/test.sqlite3
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  host: "bbvsw0mkiwbc9ylazew9-postgresql.services.clever-cloud.com"
+  database: "bbvsw0mkiwbc9ylazew9"
+  username: "u9eivaakmifdctju2p5t"
+  password: "XHZ17uMwxcH55NMxgkeJ"
+  port: 5432
+  # socket: /tmp/mysql.sock
 
 production:
   <<: *default
-  database: db/production.sqlite3
+
+development:
+  <<: *default

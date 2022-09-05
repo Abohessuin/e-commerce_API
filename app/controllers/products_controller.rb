@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
          if params[:price] && params[:price][0]  
                 price_range = params[:price][0].split('to')
                 min_price = price_range[0].to_i
-                min_price = price_range[1].to_i   
+                max_price = price_range[1].to_i   
          end
             products = products.where(:size => params[:sizes]) if params[:sizes] 
             products = products.where(:color => params[:color]) if params[:color] 

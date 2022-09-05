@@ -14,6 +14,7 @@ class ProductsController < ApplicationController
             max_price = nil
          if params[:price] && params[:price][0]  
                 price_range = params[:price][0].split('to')
+                price_range.delete("") if price_range[0] && price_range[0].empty?
                 min_price = price_range[0].to_i if price_range[0]
                 max_price = price_range[1].to_i if price_range[1]
          end

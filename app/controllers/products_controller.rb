@@ -12,11 +12,11 @@ class ProductsController < ApplicationController
             products = Product.all
             min_price = nil
             max_price = nil
-            if params[:price] 
-                price_range = params[:price].split('to')
+         if params[:price] && params[:price][0]  
+                price_range = params[:price][0].split('to')
                 min_price = price_range[0].to_i
                 min_price = price_range[1].to_i   
-            end    
+         end
             products = products.where(:size => params[:sizes]) if params[:sizes] 
             products = products.where(:color => params[:color]) if params[:color] 
             products = products.where(:room => params[:room]) if params[:room] 
